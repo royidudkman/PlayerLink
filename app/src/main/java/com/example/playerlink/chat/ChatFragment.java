@@ -79,6 +79,7 @@ public class ChatFragment extends Fragment {
                 messageList.clear();
                 messageList.addAll(messages);
                 messageListAdapter.notifyDataSetChanged();
+                binding.recycler.scrollToPosition(messageListAdapter.getItemCount() - 1);
             }
         });
 

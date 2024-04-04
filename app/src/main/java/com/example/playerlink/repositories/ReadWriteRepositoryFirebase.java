@@ -1,6 +1,7 @@
 package com.example.playerlink.repositories;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.playerlink.Result;
 import com.example.playerlink.models.Chat;
@@ -12,6 +13,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +41,7 @@ public class ReadWriteRepositoryFirebase implements ReadWriteRepository {
         chatsRef = database.getReference("chats");
     }
 
+    @Override
     public void getCurrentUser(final RepositoryCallback<User> callback) {
         FirebaseUser firebaseUser = auth.getCurrentUser();
         if (firebaseUser != null) {
@@ -63,7 +66,7 @@ public class ReadWriteRepositoryFirebase implements ReadWriteRepository {
         }
     }
 
-
+    @Override
     public void getAllUsers(final RepositoryCallback<List<User>> callback) {
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -84,8 +87,7 @@ public class ReadWriteRepositoryFirebase implements ReadWriteRepository {
     }
 
 
-
-    private String swapChatId(String originalChatId){
+    private String swapChatId(String originalChatId) {
         String[] userIds = originalChatId.split("_with_");
         String swappedChatId = userIds[1] + "_with_" + userIds[0];
 
@@ -108,7 +110,8 @@ public class ReadWriteRepositoryFirebase implements ReadWriteRepository {
                 }
 
                 // Now that we have the correct chatId, retrieve messages
-                retrieveMessages(chatId[0], callback);
+               // retrieveMessages(chatId[0], callback);
+                observeMessages(chatId[0], callback);
             }
 
             @Override
@@ -117,6 +120,31 @@ public class ReadWriteRepositoryFirebase implements ReadWriteRepository {
             }
         });
     }
+
+    private void observeMessages(String chatId, final RepositoryCallback<List<Message>> callback) {
+        chatsRef.child(chatId).child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Message> messages = new ArrayList<>();
+                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                    // Parse Message objects from DataSnapshot
+                    Message message = messageSnapshot.getValue(Message.class);
+                    messages.add(message);
+                }
+                // Pass the list of all messages to the callback
+                callback.onComplete(new Result.Success<>(messages));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle onCancelled if needed
+                callback.onComplete(new Result.Error<>(databaseError.toException()));
+            }
+        });
+    }
+
+
+
 
     private void retrieveMessages(String chatId, final RepositoryCallback<List<Message>> callback) {
         chatsRef.child(chatId).child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -136,28 +164,6 @@ public class ReadWriteRepositoryFirebase implements ReadWriteRepository {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle onCancelled if needed
-            }
-        });
-    }
-
-
-
-    private void readMessagesFromChat(String chatId, final RepositoryCallback<List<Message>> callback) {
-        DatabaseReference chatRef = chatsRef.child(chatId).child("messages");
-        chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Message> messages = new ArrayList<>();
-                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
-                    Message message = messageSnapshot.getValue(Message.class);
-                    messages.add(message);
-                }
-                callback.onComplete(new Result.Success<>(messages));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                callback.onComplete(new Result.Error<>(databaseError.toException()));
             }
         });
     }
