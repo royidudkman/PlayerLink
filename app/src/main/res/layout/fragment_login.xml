@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    style="@style/loginCard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.register_login_fragments.LoginFragment"
+    android:background="@color/whiteCardColor">
+
+    <LinearLayout
+        style="@style/linearParent"
+        android:layout_gravity="center"
+        android:padding="@dimen/loginViewsMargin">
+
+        <TextView
+            style="@style/headerTextPrimary"
+            android:text="Login"
+            android:layout_marginTop="@dimen/loginViewsMargin"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputEmail"
+            style="@style/parent"
+            android:textColorHint="@color/black"
+
+            android:layout_marginTop="@dimen/loginViewsMargin">
+            <EditText
+                android:textColor="@color/black"
+                android:id="@+id/editTextEmail"
+                style="@style/modifiedEditText"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:hint="@string/login_email_hint"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputPassword"
+            style="@style/parent"
+            android:textColorHint="@color/black"
+            android:layout_marginTop="@dimen/loginViewsMargin">
+            <EditText
+                android:textColor="@color/black"
+                android:id="@+id/editTextPassword"
+                style="@style/modifiedEditText"
+                android:hint="@string/login_password_hint"
+                android:maxLines="1"
+                android:inputType="textPassword"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/errorMessageTextView"
+            style="@style/parent"
+            android:textColor="@color/red"
+            android:layout_marginTop="5dp"
+            android:text="Error message will appear here"
+            android:visibility="gone" />
+
+        <Button
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/primaryTextColor"
+            android:textColor="@color/whiteCardColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:id="@+id/login_btn"
+            android:text="Login" />
+
+
+        <TextView
+            style="@style/parent"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/primaryTextColor"
+            android:text="@string/login_signup_hint"
+            android:onClick="viewRegisterClicked"
+            android:layout_marginTop="@dimen/loginViewsMargin"
+            android:id="@+id/signUp_textBtn"/>
+
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loadingProgressbar"
+        style="?android:attr/progressBarStyle"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+</LinearLayout>

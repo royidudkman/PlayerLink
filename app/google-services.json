@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "681252778095",
+    "project_id": "playerlink-365b1",
+    "storage_bucket": "playerlink-365b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681252778095:android:701f45eceb19761ac79d9a",
+        "android_client_info": {
+          "package_name": "com.example.playerlink"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8TiMhv00vVbI1sbfx9lcj3aD6Lb2KK6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
