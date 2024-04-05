@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/allGamesFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.playerlink.fragments.register_login_fragments.LoginFragment"
@@ -50,4 +50,9 @@
             android:id="@+id/action_allUsersFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/allGamesFragment"
+        android:name="com.example.playerlink.all_games.AllGamesFragment"
+        android:label="fragment_all_games"
+        tools:layout="@layout/fragment_all_games" />
 </navigation>
