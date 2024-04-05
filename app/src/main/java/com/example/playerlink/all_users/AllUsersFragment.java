@@ -58,11 +58,20 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
         });
     }
 
+    private String makeChatId(String userId1, String userId2){
+        String chatId;
 
+        if (userId1.compareTo(userId2) < 0) {
+            chatId = userId1 + "_with_" + userId2;
+        } else {
+            chatId = userId2 + "_with_" + userId1;
+        }
+        return chatId;
+    }
 
     @Override
     public void onUserClick(User currentUser, User otherUser) {
-        String chatId = currentUser.getUserId() + "_with_" + otherUser.getUserId();
+        String chatId = makeChatId(currentUser.getUserId(), otherUser.getUserId());
         Bundle args = new Bundle();
         args.putSerializable("currentUser", currentUser);
         args.putSerializable("otherUser", otherUser);

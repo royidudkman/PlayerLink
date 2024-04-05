@@ -38,6 +38,9 @@ public class ChatFragment extends Fragment {
             currentUser = (User) getArguments().getSerializable("currentUser");
             otherUser = (User) getArguments().getSerializable("otherUser");
             chatId = getArguments().getString("chatId");
+            chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
+            chatViewModel.initializeChat(chatId);
+
         }
     }
 
@@ -45,6 +48,7 @@ public class ChatFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentChatBinding.inflate(inflater, container, false);
+        binding.usernameTitle.setText(otherUser.getUserName());
         return binding.getRoot();
     }
 

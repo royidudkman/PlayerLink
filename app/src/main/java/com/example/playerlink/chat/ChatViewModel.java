@@ -25,6 +25,8 @@ public class ChatViewModel extends ViewModel {
     private final DatabaseReference chatsRef;
     private final MutableLiveData<List<Message>> messagesLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> messageIdLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isChatInitialized = new MutableLiveData<>(false);
+    private ChildEventListener childEventListener;
 
     public ChatViewModel() {
         repository = new ReadWriteRepositoryFirebase();
@@ -58,7 +60,7 @@ public class ChatViewModel extends ViewModel {
             public void onComplete(Result<String> result) {
                 if (result instanceof Result.Success) {
                     messageIdLiveData.postValue(((Result.Success<String>) result).data);
-                    //readMessages(chatId);
+                    readMessages(chatId);
                     observeMessages(chatId, null);
                 } else {
                     // Handle error
@@ -67,50 +69,69 @@ public class ChatViewModel extends ViewModel {
         });
     }
 
-
-
+    public LiveData<Boolean> getIsChatInitialized() {
+        return isChatInitialized;
+    }
+    public void initializeChat(String chatId) {
+        if (!isChatInitialized.getValue()) {
+            observeMessages(chatId, null);
+            isChatInitialized.postValue(true);
+        }
+    }
 
     private void observeMessages(String chatId, final RepositoryCallback<List<Message>> callback) {
-        chatsRef.child(chatId).child("messages").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
-                // A new message has been added to the chat
-                Message message = dataSnapshot.getValue(Message.class);
-                List<Message> messages = messagesLiveData.getValue();
-                if (messages == null) {
-                    messages = new ArrayList<>();
+
+        if (childEventListener == null) {
+            childEventListener = chatsRef.child(chatId).child("messages").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+                    // A new message has been added to the chat
+                    Message message = dataSnapshot.getValue(Message.class);
+                    List<Message> messages = messagesLiveData.getValue();
+                    if (messages == null) {
+                        messages = new ArrayList<>();
+                    }
+                    messages.add(message);
+                    messagesLiveData.postValue(messages);
                 }
-                messages.add(message);
-                messagesLiveData.postValue(messages);
-            }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // Handle message changed if needed
-            }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                // Handle message removed if needed
-            }
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    // Handle message changed if needed
+                }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // Handle message moved if needed
-            }
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                    // Handle message removed if needed
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle onCancelled if needed
-                callback.onComplete(new Result.Error<>(databaseError.toException()));
-            }
-        });
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    // Handle message moved if needed
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle onCancelled if needed
+                    callback.onComplete(new Result.Error<>(databaseError.toException()));
+                }
+            });
+        }
+
+
     }
 
 
 
-
-
-
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if (childEventListener != null) {
+            // Remove the ChildEventListener
+            chatsRef.removeEventListener(childEventListener);
+            childEventListener = null;
+        }
+    }
 
 }

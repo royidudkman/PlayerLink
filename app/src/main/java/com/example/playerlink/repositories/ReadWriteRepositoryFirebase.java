@@ -87,41 +87,8 @@ public class ReadWriteRepositoryFirebase implements ReadWriteRepository {
     }
 
 
-    private String swapChatId(String originalChatId) {
-        String[] userIds = originalChatId.split("_with_");
-        String swappedChatId = userIds[1] + "_with_" + userIds[0];
-
-        return swappedChatId;
-    }
-
     @Override
-    public void readMessages(String originalChatId, final RepositoryCallback<List<Message>> callback) {
-        final String[] chatId = {originalChatId};
-
-        chatsRef.child(originalChatId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-
-                    chatId[0] = originalChatId;
-                } else {
-
-                    chatId[0] = swapChatId(originalChatId);
-                }
-
-                // Now that we have the correct chatId, retrieve messages
-               // retrieveMessages(chatId[0], callback);
-                observeMessages(chatId[0], callback);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void observeMessages(String chatId, final RepositoryCallback<List<Message>> callback) {
+    public void readMessages(String chatId, final RepositoryCallback<List<Message>> callback) {
         chatsRef.child(chatId).child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -142,9 +109,6 @@ public class ReadWriteRepositoryFirebase implements ReadWriteRepository {
             }
         });
     }
-
-
-
 
     private void retrieveMessages(String chatId, final RepositoryCallback<List<Message>> callback) {
         chatsRef.child(chatId).child("messages").addListenerForSingleValueEvent(new ValueEventListener() {

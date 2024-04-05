@@ -14,15 +14,16 @@
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:background="@color/primaryTextColor"
-            android:id="@+id/toolbar_gchannel"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/Widget.AppCompat.Toolbar"
-            app:popupTheme="@style/Theme.AppCompat.Light">
+            android:layout_height="match_parent"
+            android:text="username"
+            android:textSize="30dp"
+            android:background="@color/primaryTextColor"
+            android:textColor="@color/white"
+            android:paddingLeft="10dp"
+            android:id="@+id/username_title"/>
 
-        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
