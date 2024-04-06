@@ -53,7 +53,7 @@ public class RegisterFragment extends Fragment {
             public void onChanged(Result<User> result) {
                 if (result instanceof Result.Success) {
                     // Handle successful registration
-                   // Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_allUsersFragment);
+                    Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_allGamesFragment);
                 } else if(result instanceof Result.Loading) {
                     binding.loadingProgressbar.setVisibility(View.VISIBLE);
                 } else {

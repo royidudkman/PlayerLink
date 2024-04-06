@@ -86,7 +86,6 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
 
         ChatFragment chatFragment = new ChatFragment();
         chatFragment.setArguments(args);
-        //TODO add to mychats
 
         NavHostFragment.findNavController(this).navigate(R.id.action_allUsersFragment_to_chatFragment,args);
     }

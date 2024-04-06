@@ -14,6 +14,10 @@ public class Game {
         this.image = image;
     }
 
+    public Game(){
+
+    }
+
     public String getName() {
         return name;
     }

@@ -7,9 +7,8 @@ public class User implements Serializable {
     private String userId;
     private String userName;
     private String userEmail;
-
     private List<Game> myGames;
-    private List<User> myFriends;
+;
 
 
 
@@ -55,13 +54,6 @@ public class User implements Serializable {
         this.myGames = myGames;
     }
 
-    public List<User> getMyFriends() {
-        return myFriends;
-    }
-
-    public void setMyFriends(List<User> myFriends) {
-        this.myFriends = myFriends;
-    }
 
     @Override
     public String toString() {

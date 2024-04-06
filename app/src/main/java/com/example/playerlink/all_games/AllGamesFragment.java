@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -99,6 +100,7 @@ public class AllGamesFragment extends Fragment {
                         if (result instanceof Result.Success) {
                             // Handle success
                             Toast.makeText(requireContext(), "Games saved", Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(requireView()).navigate(R.id.action_allGamesFragment_to_allUsersFragment2);
                         } else if (result instanceof Result.Error) {
                             // Handle error
                             Toast.makeText(requireContext(), "Error saving games", Toast.LENGTH_SHORT).show();

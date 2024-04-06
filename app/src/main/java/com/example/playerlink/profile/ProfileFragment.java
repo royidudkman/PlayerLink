@@ -48,6 +48,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void updateGames(){
+        Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_allGamesFragment);
 
     }
 
