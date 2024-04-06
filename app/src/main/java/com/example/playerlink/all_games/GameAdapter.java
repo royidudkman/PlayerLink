@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.widget.CheckBox;
 import com.bumptech.glide.Glide;
 import com.example.playerlink.R;
 import com.example.playerlink.models.Game;
@@ -25,17 +25,25 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         notifyDataSetChanged();
     }
 
+    public List<Game> getGames(){
+        return games;
+    }
+
     @NonNull
     @Override
     public GameViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_card, parent, false);
         return new GameViewHolder(view);
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull GameViewHolder holder, int position) {
         Game game = games.get(position);
         holder.bind(game);
+        holder.checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            game.setSelected(isChecked);
+        });
     }
 
     @Override
@@ -47,12 +55,14 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         private ImageView gameImage;
         private TextView gameTitle;
         private TextView rating;
+        private CheckBox checkbox;
 
         public GameViewHolder(@NonNull View itemView) {
             super(itemView);
             gameImage = itemView.findViewById(R.id.game_image);
             gameTitle = itemView.findViewById(R.id.game_title);
             rating = itemView.findViewById(R.id.rating);
+            checkbox = itemView.findViewById(R.id.checkbox);
         }
 
         public void bind(Game game) {

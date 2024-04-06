@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.example.playerlink.RAWG_api.DataService;
 import com.example.playerlink.models.Game;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AllGamesFragment extends Fragment {
 
@@ -44,5 +46,21 @@ public class AllGamesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(gameAdapter);
 
+        Button saveGameBtn = view.findViewById(R.id.save_games_btn);
+        saveGameBtn.setOnClickListener(v -> saveSelectedGames());
+
+    }
+
+    private void saveSelectedGames() {
+        List<Game> selectedGames = new ArrayList<>();
+        for (Game game : gameAdapter.getGames()) {
+            if (game.isSelected()) {
+                selectedGames.add(game);
+            }
+        }
+
+        // Write selectedGames to Firebase
+        // Example: DatabaseReference gamesRef = FirebaseDatabase.getInstance().getReference("games");
+        //          gamesRef.setValue(selectedGames);
     }
 }

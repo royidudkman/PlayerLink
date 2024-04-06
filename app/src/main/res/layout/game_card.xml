@@ -46,12 +46,6 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/black" />
-
                 <TextView
                     android:id="@+id/rating"
                     android:layout_width="wrap_content"
@@ -64,8 +58,16 @@
                     android:textStyle="bold"
                     android:textSize="20sp" />
 
-
             </LinearLayout>
+
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/checkbox"/>
+
+
         </LinearLayout>
 
 

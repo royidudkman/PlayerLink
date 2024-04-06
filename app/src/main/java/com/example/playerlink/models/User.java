@@ -1,11 +1,17 @@
 package com.example.playerlink.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable {
     private String userId;
     private String userName;
     private String userEmail;
+
+    private List<Game> myGames;
+    private List<User> myFriends;
+
+
 
     public User() {
         // Default constructor required for Firebase
@@ -39,6 +45,22 @@ public class User implements Serializable {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public List<Game> getMyGames() {
+        return myGames;
+    }
+
+    public void setMyGames(List<Game> myGames) {
+        this.myGames = myGames;
+    }
+
+    public List<User> getMyFriends() {
+        return myFriends;
+    }
+
+    public void setMyFriends(List<User> myFriends) {
+        this.myFriends = myFriends;
     }
 
     @Override
