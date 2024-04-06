@@ -41,22 +41,27 @@ public class MyChatsFragment extends Fragment implements MyChatsAdapter.OnUserCl
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(MyChatsViewModel.class);
 
-        adapter = new MyChatsAdapter(requireContext(), new ArrayList<>(), null, this);
-        binding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-        binding.recycler.setAdapter(adapter);
+        viewModel.getCurrentUser().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if (user != null) {
+                    // Initialize adapter with current user
+                    adapter = new MyChatsAdapter(requireContext(), new ArrayList<>(), user, MyChatsFragment.this);
+                    binding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+                    binding.recycler.setAdapter(adapter);
+                } else {
+                    // Handle the case where current user is null
+                }
+            }
+        });
 
         viewModel.getChatsWithUsersLiveData().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
                 // Update the adapter with the list of users
-                adapter.setUserList(users);
-            }
-        });
-
-        viewModel.getCurrentUser().observe(getViewLifecycleOwner(), new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                // No need to do anything here
+                if (adapter != null) {
+                    adapter.setUserList(users);
+                }
             }
         });
     }
