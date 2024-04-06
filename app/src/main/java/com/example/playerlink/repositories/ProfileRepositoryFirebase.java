@@ -37,25 +37,6 @@ public class ProfileRepositoryFirebase implements ProfileRepository {
                 .addOnFailureListener(e -> callback.onComplete(new Result.Error<>(e)));
     }
 
-    @Override
-    public void getFriendsList(String userId, RepositoryCallback<List<User>> callback) {
-        usersRef.child(userId).child("myFriends").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                List<User> friends = new ArrayList<>();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User friend = snapshot.getValue(User.class);
-                    friends.add(friend);
-                }
-                callback.onComplete(new Result.Success<>(friends));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                callback.onComplete(new Result.Error<>(databaseError.toException()));
-            }
-        });
-    }
 
     public void getChatsAndUsers(String currentUserId, RepositoryCallback<List<User>> callback) {
         DatabaseReference chatsRef = FirebaseDatabase.getInstance().getReference("chats");
@@ -137,21 +118,28 @@ public class ProfileRepositoryFirebase implements ProfileRepository {
 
 
     @Override
-    public void updateGamesList(String userId, List<Game> games, RepositoryCallback<Void> callback) {
+    public void updateGamesList(String userId, List<String> games, RepositoryCallback<Void> callback) {
         // Update games list in Firebase
-        usersRef.child(userId).child("myGames").setValue(games)
-                .addOnSuccessListener(aVoid -> callback.onComplete(new Result.Success<>(null)))
-                .addOnFailureListener(e -> callback.onComplete(new Result.Error<>(e)));
+        if(games.isEmpty()){
+            usersRef.child(userId).child("myGames").removeValue()
+                    .addOnSuccessListener(aVoid -> callback.onComplete(new Result.Success<>(null)))
+                    .addOnFailureListener(e -> callback.onComplete(new Result.Error<>(e)));
+        } else{
+            usersRef.child(userId).child("myGames").setValue(games)
+                    .addOnSuccessListener(aVoid -> callback.onComplete(new Result.Success<>(null)))
+                    .addOnFailureListener(e -> callback.onComplete(new Result.Error<>(e)));
+        }
+
     }
 
     @Override
-    public void getGamesList(String userId, RepositoryCallback<List<Game>> callback) {
+    public void getGamesList(String userId, RepositoryCallback<List<String>> callback) {
         usersRef.child(userId).child("myGames").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<Game> games = new ArrayList<>();
+                List<String> games = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Game game = snapshot.getValue(Game.class);
+                    String game = snapshot.getValue(String.class);
                     games.add(game);
                 }
                 callback.onComplete(new Result.Success<>(games));

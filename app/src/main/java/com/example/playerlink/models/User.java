@@ -7,7 +7,7 @@ public class User implements Serializable {
     private String userId;
     private String userName;
     private String userEmail;
-    private List<Game> myGames;
+    private List<String> myGames;
 ;
 
 
@@ -46,11 +46,11 @@ public class User implements Serializable {
         this.userEmail = userEmail;
     }
 
-    public List<Game> getMyGames() {
+    public List<String> getMyGames() {
         return myGames;
     }
 
-    public void setMyGames(List<Game> myGames) {
+    public void setMyGames(List<String> myGames) {
         this.myGames = myGames;
     }
 

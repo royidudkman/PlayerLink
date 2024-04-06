@@ -81,10 +81,10 @@ public class AllGamesFragment extends Fragment {
     private void saveSelectedGames() {
         String userId = getCurrentUserId();
 
-        List<Game> selectedGames = new ArrayList<>();
+        List<String> selectedGames = new ArrayList<>();
         for (Game game : gameAdapter.getGames()) {
             if (game.isSelected()) {
-                selectedGames.add(game);
+                selectedGames.add(game.getName());
             }
         }
 
