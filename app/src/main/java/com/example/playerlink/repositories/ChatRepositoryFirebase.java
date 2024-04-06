@@ -1,19 +1,15 @@
 package com.example.playerlink.repositories;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.example.playerlink.Result;
 import com.example.playerlink.models.Chat;
 import com.example.playerlink.models.Message;
 import com.example.playerlink.models.User;
-import com.example.playerlink.repositories.ReadWriteRepository;
-import com.example.playerlink.repositories.RepositoryCallback;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +22,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ReadWriteRepositoryFirebase implements ReadWriteRepository {
+public class ChatRepositoryFirebase implements ChatRepository {
     private final Executor executor;
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -34,7 +30,7 @@ public class ReadWriteRepositoryFirebase implements ReadWriteRepository {
     private final DatabaseReference chatsRef;
 
 
-    public ReadWriteRepositoryFirebase() {
+    public ChatRepositoryFirebase() {
         ExecutorService executorService = Executors.newFixedThreadPool(4);
         this.executor = executorService;
         usersRef = database.getReference("users");

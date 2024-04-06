@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/search_players"
+        android:enabled="true"
+        android:icon="@drawable/search_alt_2_svgrepo_com"
+        android:title="Search players"/>
+    <item
+        android:id="@+id/chats"
+        android:enabled="true"
+        android:icon="@drawable/chats_dots_svgrepo_com"
+        android:title="Chats"/>
+    <item
+        android:id="@+id/profile"
+        android:enabled="true"
+        android:icon="@drawable/profile_1336_svgrepo_com"
+        android:title="Profile"/>
+</menu>

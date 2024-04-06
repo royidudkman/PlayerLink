@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.playerlink.Result;
 import com.example.playerlink.models.User;
-import com.example.playerlink.repositories.ReadWriteRepositoryFirebase;
+import com.example.playerlink.repositories.ChatRepositoryFirebase;
 import com.example.playerlink.repositories.RepositoryCallback;
 
 import java.util.ArrayList;
@@ -14,12 +14,12 @@ import java.util.List;
 
 public class AllUsersViewModel extends ViewModel {
 
-    private ReadWriteRepositoryFirebase mRepository;
+    private ChatRepositoryFirebase mRepository;
     private MutableLiveData<List<User>> mUsersLiveData = new MutableLiveData<>();
     private final MutableLiveData<User> mCurrentUserLiveData = new MutableLiveData<>();
 
     public AllUsersViewModel() {
-        mRepository = new ReadWriteRepositoryFirebase(); // Using the ReadWriteRepositoryFirebase
+        mRepository = new ChatRepositoryFirebase(); // Using the ReadWriteRepositoryFirebase
         fetchCurrentUser();
         fetchAllUsers();
     }
@@ -30,20 +30,6 @@ public class AllUsersViewModel extends ViewModel {
     public LiveData<User> getCurrentUser() {
         return mCurrentUserLiveData;
     }
-//    public LiveData<User> getCurrentUser() {
-//        MutableLiveData<User> currentUserLiveData = new MutableLiveData<>();
-//        mRepository.getCurrentUser(new RepositoryCallback<User>() {
-//            @Override
-//            public void onComplete(Result<User> result) {
-//                if (result instanceof Result.Success) {
-//                    currentUserLiveData.postValue(((Result.Success<User>) result).data);
-//                } else {
-//                    // Handle error
-//                }
-//            }
-//        });
-//        return currentUserLiveData;
-//    }
 
 
     private void fetchCurrentUser() {

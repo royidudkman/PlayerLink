@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +14,7 @@ import com.example.playerlink.models.User;
 
 import java.util.List;
 
-public class AllUsersAdapter extends RecyclerView.Adapter<AllUsersAdapter.UserViewHolder> {
+public class MyChatsAdapter extends RecyclerView.Adapter<MyChatsAdapter.MyViewHolder> {
 
     private Context mContext;
     private List<User> mUsersList;
@@ -26,7 +25,7 @@ public class AllUsersAdapter extends RecyclerView.Adapter<AllUsersAdapter.UserVi
         void onUserClick(User currentUser, User otherUser);
     }
 
-    public AllUsersAdapter(Context context, List<User> usersList, User currentUser, OnUserClickListener listener) {
+    public MyChatsAdapter(Context context, List<User> usersList, User currentUser, OnUserClickListener listener) {
         this.mContext = context;
         this.mUsersList = usersList;
         this.currentUser = currentUser;
@@ -35,21 +34,20 @@ public class AllUsersAdapter extends RecyclerView.Adapter<AllUsersAdapter.UserVi
 
     @NonNull
     @Override
-    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.chat_with_user_card, parent, false);
-        return new UserViewHolder(view);
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.user_card, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         User user = mUsersList.get(position);
         holder.bind(user);
 
-        holder.addFriendBtn.setOnClickListener(new View.OnClickListener(){
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onUserClick(currentUser,user);
+                mListener.onUserClick(currentUser, user);
             }
         });
     }
@@ -59,14 +57,12 @@ public class AllUsersAdapter extends RecyclerView.Adapter<AllUsersAdapter.UserVi
         return mUsersList.size();
     }
 
-    public static class UserViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView userNameTextView;
-        Button addFriendBtn;
 
-        public UserViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             userNameTextView = itemView.findViewById(R.id.username_title);
-            addFriendBtn = itemView.findViewById(R.id.start_chat_btn);
         }
 
         public void bind(User user) {

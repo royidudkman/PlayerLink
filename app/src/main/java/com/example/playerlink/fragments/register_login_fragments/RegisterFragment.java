@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.example.playerlink.MainActivity;
 import com.example.playerlink.R;
 import com.example.playerlink.Result;
 import com.example.playerlink.models.User;
@@ -29,6 +30,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
+        ((MainActivity) requireActivity()).setBottomNavigationVisibility(View.GONE);
         authRepository = new AuthRepositoryFirebase();
         viewModel = new ViewModelProvider(this, new ViewModelFactory(authRepository)).get(RegisterViewModel.class);
         return binding.getRoot();
@@ -51,7 +53,7 @@ public class RegisterFragment extends Fragment {
             public void onChanged(Result<User> result) {
                 if (result instanceof Result.Success) {
                     // Handle successful registration
-                    Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_allUsersFragment);
+                   // Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_allUsersFragment);
                 } else if(result instanceof Result.Loading) {
                     binding.loadingProgressbar.setVisibility(View.VISIBLE);
                 } else {

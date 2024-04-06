@@ -1,12 +1,11 @@
 package com.example.playerlink.repositories;
 
-import com.example.playerlink.models.Chat;
 import com.example.playerlink.models.Message;
 import com.example.playerlink.models.User;
 
 import java.util.List;
 
-public interface ReadWriteRepository {
+public interface ChatRepository {
     public void getCurrentUser(final RepositoryCallback<User> callback);
     public void getAllUsers(final RepositoryCallback<List<User>> callback);
 

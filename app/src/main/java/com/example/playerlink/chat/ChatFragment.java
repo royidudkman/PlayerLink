@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.playerlink.MainActivity;
 import com.example.playerlink.databinding.FragmentChatBinding;
 import com.example.playerlink.models.Message;
 import com.example.playerlink.models.User;
@@ -33,6 +34,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((MainActivity) requireActivity()).setBottomNavigationVisibility(View.GONE);
 
         if (getArguments() != null) {
             currentUser = (User) getArguments().getSerializable("currentUser");

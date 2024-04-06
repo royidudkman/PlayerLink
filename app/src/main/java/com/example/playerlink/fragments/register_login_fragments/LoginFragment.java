@@ -12,10 +12,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.example.playerlink.MainActivity;
 import com.example.playerlink.R;
 import com.example.playerlink.Result;
 import com.example.playerlink.databinding.FragmentLoginBinding;
 import com.example.playerlink.repositories.AuthRepositoryFirebase;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LoginFragment extends Fragment {
 
@@ -28,6 +30,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
+        ((MainActivity) requireActivity()).setBottomNavigationVisibility(View.GONE);
         authRepository = new AuthRepositoryFirebase();
         viewModel = new ViewModelProvider(this, new ViewModelFactory(authRepository)).get(LoginViewModel.class);
         return binding.getRoot();

@@ -1,11 +1,9 @@
-package com.example.playerlink.all_users;
+package com.example.playerlink.myChats;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,29 +14,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.playerlink.MainActivity;
 import com.example.playerlink.R;
-import com.example.playerlink.Result;
+import com.example.playerlink.all_users.MyChatsAdapter;
 import com.example.playerlink.chat.ChatFragment;
-import com.example.playerlink.databinding.FragmentAllUsersBinding;
-import com.example.playerlink.models.Chat;
+import com.example.playerlink.databinding.FragmentMyChatsBinding;
 import com.example.playerlink.models.User;
-import com.example.playerlink.repositories.ProfileRepositoryFirebase;
-import com.example.playerlink.repositories.RepositoryCallback;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUserClickListener {
+public class MyChatsFragment extends Fragment implements MyChatsAdapter.OnUserClickListener {
 
-    private FragmentAllUsersBinding binding;
-    private AllUsersViewModel viewModel;
-    private AllUsersAdapter adapter;
-    private ProfileRepositoryFirebase repository = new ProfileRepositoryFirebase();
+    private FragmentMyChatsBinding binding;
+    private MyChatsViewModel viewModel;
+    private MyChatsAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentAllUsersBinding.inflate(inflater, container, false);
+        binding = FragmentMyChatsBinding.inflate(inflater, container, false);
         ((MainActivity) requireActivity()).setBottomNavigationVisibility(View.VISIBLE);
         return binding.getRoot();
     }
@@ -46,24 +39,28 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(MyChatsViewModel.class);
 
-        // Initialize ViewModel
-        viewModel = new ViewModelProvider(this).get(AllUsersViewModel.class);
+        adapter = new MyChatsAdapter(requireContext(), new ArrayList<>(), null, this);
+        binding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.recycler.setAdapter(adapter);
 
-        // Get current logged-in user from ViewModel
+        viewModel.getChatsWithUsersLiveData().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
+            @Override
+            public void onChanged(List<User> users) {
+                // Update the adapter with the list of users
+                adapter.setUserList(users);
+            }
+        });
+
         viewModel.getCurrentUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                // Initialize adapter with current user
-                adapter = new AllUsersAdapter(requireContext(), new ArrayList<>(), user, AllUsersFragment.this);
-                binding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-                binding.recycler.setAdapter(adapter);
-
-                // Observe users
-                observeUsers();
+                // No need to do anything here
             }
         });
     }
+
 
     private String makeChatId(String userId1, String userId2){
         String chatId;
@@ -86,18 +83,8 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
 
         ChatFragment chatFragment = new ChatFragment();
         chatFragment.setArguments(args);
-        //TODO add to mychats
 
-        NavHostFragment.findNavController(this).navigate(R.id.action_allUsersFragment_to_chatFragment,args);
-    }
-
-    private void observeUsers() {
-        viewModel.getUsersLiveData().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                adapter.setUserList(users);
-            }
-        });
+        NavHostFragment.findNavController(this).navigate(R.id.action_myChatsFragment_to_chatFragment,args);
     }
 
     @Override

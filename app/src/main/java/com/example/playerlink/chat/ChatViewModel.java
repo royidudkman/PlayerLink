@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.playerlink.Result;
 import com.example.playerlink.models.Message;
-import com.example.playerlink.repositories.ReadWriteRepository;
-import com.example.playerlink.repositories.ReadWriteRepositoryFirebase;
+import com.example.playerlink.repositories.ChatRepository;
+import com.example.playerlink.repositories.ChatRepositoryFirebase;
 import com.example.playerlink.repositories.RepositoryCallback;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatViewModel extends ViewModel {
-    private final ReadWriteRepository repository;
+    private final ChatRepository repository;
     private final DatabaseReference chatsRef;
     private final MutableLiveData<List<Message>> messagesLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> messageIdLiveData = new MutableLiveData<>();
@@ -29,7 +29,7 @@ public class ChatViewModel extends ViewModel {
     private ChildEventListener childEventListener;
 
     public ChatViewModel() {
-        repository = new ReadWriteRepositoryFirebase();
+        repository = new ChatRepositoryFirebase();
         chatsRef = FirebaseDatabase.getInstance().getReference().child("chats");
     }
 
