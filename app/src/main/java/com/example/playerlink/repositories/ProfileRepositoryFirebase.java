@@ -151,4 +151,34 @@ public class ProfileRepositoryFirebase implements ProfileRepository {
             }
         });
     }
+
+    @Override
+    public void getUsersByGame(String game, String currentUserId, RepositoryCallback<List<User>> callback) {
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<User> users = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    if (user != null && !user.getUserId().equals(currentUserId)) {
+                        if (user.getMyGames() != null && user.getMyGames().contains(game)) {
+                            // If user has myGames and it contains the selected game, add the user
+                            users.add(user);
+                        } else if (user.getMyGames() == null && game.equals("Filter by game")) {
+                            // If user doesn't have myGames and the selected game is "Filter by game", add the user
+                            users.add(user);
+                        }
+                    }
+                }
+                callback.onComplete(new Result.Success<>(users));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                callback.onComplete(new Result.Error<>(databaseError.toException()));
+            }
+        });
+    }
+
+
 }
