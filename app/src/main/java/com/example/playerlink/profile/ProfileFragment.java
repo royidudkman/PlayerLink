@@ -5,8 +5,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -20,6 +23,7 @@ import com.example.playerlink.models.User;
 import com.example.playerlink.repositories.AuthRepositoryFirebase;
 import com.example.playerlink.repositories.ProfileRepositoryFirebase;
 import com.example.playerlink.repositories.RepositoryCallback;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class ProfileFragment extends Fragment {
 
@@ -65,13 +69,33 @@ public class ProfileFragment extends Fragment {
 
     private void changeUsername(){
 
-//        profileRepository.changeUsername(currentUser.getUserId(), newUserName, new RepositoryCallback<Void>() {
-//            @Override
-//            public void onComplete(Result<Void> result) {
-//
-//            }
-//        });
+        View dialogView = getLayoutInflater().inflate(R.layout.change_username_dialog, null);
+
+        TextInputEditText newUsernameEditText = dialogView.findViewById(R.id.newUsername_editText);
+        Button cancelBtn = dialogView.findViewById(R.id.cancel_btn);
+        Button saveBtn = dialogView.findViewById(R.id.saveUsername_btn);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+
+        cancelBtn.setOnClickListener(v -> dialog.dismiss());
+        saveBtn.setOnClickListener(v -> {
+            String newUsername = newUsernameEditText.getText().toString();
+            profileRepository.changeUsername(currentUser.getUserId(), newUsername, new RepositoryCallback<Void>() {
+                @Override
+                public void onComplete(Result<Void> result) {
+
+                }
+            });
+
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
+
+
 
     @Override
     public void onDestroyView() {
