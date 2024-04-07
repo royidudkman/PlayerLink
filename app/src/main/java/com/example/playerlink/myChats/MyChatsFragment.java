@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.playerlink.MainActivity;
 import com.example.playerlink.R;
-import com.example.playerlink.all_users.MyChatsAdapter;
+
 import com.example.playerlink.chat.ChatFragment;
 import com.example.playerlink.databinding.FragmentMyChatsBinding;
 import com.example.playerlink.fragments.register_login_fragments.LoginFragment;

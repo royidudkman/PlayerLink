@@ -1,11 +1,18 @@
 package com.example.playerlink.profile;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,8 +32,11 @@ import com.example.playerlink.repositories.ProfileRepositoryFirebase;
 import com.example.playerlink.repositories.RepositoryCallback;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.IOException;
+
 public class ProfileFragment extends Fragment {
 
+    private static final int PICK_IMAGE_REQUEST = 1;
     private FragmentProfileBinding binding;
     private AuthRepositoryFirebase authRepository;
     private ProfileRepositoryFirebase profileRepository;
@@ -42,6 +52,11 @@ public class ProfileFragment extends Fragment {
         ((MainActivity) requireActivity()).setBottomNavigationVisibility(View.VISIBLE);
         authRepository = new AuthRepositoryFirebase();
         profileRepository = new ProfileRepositoryFirebase();
+        if(currentUser.getUserImage() == null){
+            binding.profilePicture.setImageResource(R.mipmap.ic_launcher);
+        } else{
+            binding.profilePicture.setImageBitmap(currentUser.getUserImage());
+        }
         return binding.getRoot();
     }
 
@@ -55,11 +70,28 @@ public class ProfileFragment extends Fragment {
 
         binding.signOutBtn.setOnClickListener(v ->{ signOut(v);});
 
+        binding.changeImageBtn.setOnClickListener(v ->{ changeProfilePicture();});
+
     }
 
     private void signOut(View v){
-        authRepository.logout();
-        Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_loginFragment);
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Sign Out")
+                .setMessage("Are you sure you want to sign out?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        authRepository.logout();
+                        Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_loginFragment);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .show();
     }
 
     private void updateGames(){
@@ -93,6 +125,41 @@ public class ProfileFragment extends Fragment {
         });
 
         dialog.show();
+    }
+
+    public void changeProfilePicture() {
+        // Create an intent to pick an image from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+
+                Uri selectedImageUri = data.getData();
+                try {
+
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
+                    binding.profilePicture.setImageBitmap(bitmap);
+
+                    currentUser.setUserImage(bitmap);
+                    profileRepository.updateUserImage(currentUser.getUserId(), currentUser.getImageString(), new RepositoryCallback<Void>() {
+                        @Override
+                        public void onComplete(Result<Void> result) {
+
+                        }
+                    });
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 

@@ -8,7 +8,18 @@
     android:orientation="vertical"
     android:background="@color/white">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pick the games that you play"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:layout_margin="10dp"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

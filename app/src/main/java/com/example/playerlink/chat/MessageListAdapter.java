@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.playerlink.R;
 import com.example.playerlink.Result;
+import com.example.playerlink.fragments.register_login_fragments.LoginFragment;
 import com.example.playerlink.models.Message;
 import com.example.playerlink.models.User;
 import com.example.playerlink.repositories.AuthRepository;
@@ -26,27 +27,15 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private Context mContext;
     private List<Message> mMessageList;
-    private User mCurrentUser;
     private AuthRepository mAuthRepository;
+    private User currentUser = LoginFragment.GetCurrentUser();
 
     public MessageListAdapter(Context context, List<Message> messageList) {
         this.mContext = context;
         this.mMessageList = messageList;
         this.mAuthRepository = new AuthRepositoryFirebase();
-        getCurrentUser();
     }
 
-    private void getCurrentUser() {
-        mAuthRepository.CurrentUser(new RepositoryCallback<User>() {
-            @Override
-            public void onComplete(Result<User> result) {
-                if (result instanceof Result.Success) {
-                    mCurrentUser = ((Result.Success<User>) result).data;
-                    notifyDataSetChanged();
-                }
-            }
-        });
-    }
 
     @NonNull
     @Override
@@ -78,9 +67,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (mCurrentUser != null) {
+        if (currentUser != null) {
             Message message = mMessageList.get(position);
-            if (message != null && message.getSenderId() != null && message.getSenderId().equals(mCurrentUser.getUserId())) {
+            if (message != null && message.getSenderId() != null && message.getSenderId().equals(currentUser.getUserId())) {
                 return VIEW_TYPE_MY_MESSAGE;
             }
         }

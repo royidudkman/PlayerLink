@@ -57,6 +57,7 @@ public class LoginFragment extends Fragment {
                 binding.signUpTextBtn.setEnabled(false);
 
             } else if (result instanceof Result.Success) {
+                currentUser = ((Result.Success<User>) result).data;
                 Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_allUsersFragment);
 
             } else {
@@ -96,6 +97,9 @@ public class LoginFragment extends Fragment {
 
     public static User GetCurrentUser(){
         return currentUser;
+    }
+    public static void SetCurrentUser(User user){
+        currentUser = user;
     }
 
     @Override

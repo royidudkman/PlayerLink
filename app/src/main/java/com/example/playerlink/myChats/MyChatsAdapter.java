@@ -1,9 +1,10 @@
-package com.example.playerlink.all_users;
+package com.example.playerlink.myChats;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -59,14 +60,21 @@ public class MyChatsAdapter extends RecyclerView.Adapter<MyChatsAdapter.MyViewHo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView userNameTextView;
+        ImageView userImage;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             userNameTextView = itemView.findViewById(R.id.username_title);
+            userImage = itemView.findViewById(R.id.user_image);
         }
 
         public void bind(User user) {
             userNameTextView.setText(user.getUserName());
+            if(user.getUserImage() == null) {
+                userImage.setImageResource(R.mipmap.ic_launcher);
+            } else {
+                userImage.setImageBitmap(user.getUserImage());
+            }
         }
     }
 

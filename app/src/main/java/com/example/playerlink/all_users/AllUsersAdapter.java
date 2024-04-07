@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,15 +63,22 @@ public class AllUsersAdapter extends RecyclerView.Adapter<AllUsersAdapter.UserVi
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         TextView userNameTextView;
         Button addFriendBtn;
+        ImageView userImage;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             userNameTextView = itemView.findViewById(R.id.username_title);
             addFriendBtn = itemView.findViewById(R.id.start_chat_btn);
+            userImage = itemView.findViewById(R.id.user_image);
         }
 
         public void bind(User user) {
             userNameTextView.setText(user.getUserName());
+            if(user.getUserImage() == null) {
+                userImage.setImageResource(R.mipmap.ic_launcher);
+            } else {
+                userImage.setImageBitmap(user.getUserImage());
+            }
         }
     }
 

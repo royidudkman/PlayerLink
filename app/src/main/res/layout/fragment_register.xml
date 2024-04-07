@@ -16,7 +16,7 @@
 
         <TextView
             style="@style/headerTextPrimary"
-            android:text="@string/register"
+            android:text="Welcome to PlayerLink \n Register"
             android:layout_marginTop="@dimen/loginViewsMargin"/>
 
         <com.google.android.material.textfield.TextInputLayout

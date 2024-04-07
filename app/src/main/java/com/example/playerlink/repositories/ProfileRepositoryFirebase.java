@@ -37,6 +37,14 @@ public class ProfileRepositoryFirebase implements ProfileRepository {
                 .addOnFailureListener(e -> callback.onComplete(new Result.Error<>(e)));
     }
 
+    @Override
+    public void updateUserImage(String userId, String imageString, RepositoryCallback<Void> callback) {
+        usersRef.child(userId).child("imageString").setValue(imageString)
+                .addOnSuccessListener(aVoid -> callback.onComplete(new Result.Success<>(null)))
+                .addOnFailureListener(e -> callback.onComplete(new Result.Error<>(e)));
+    }
+
+
 
     public void getChatsAndUsers(String currentUserId, RepositoryCallback<List<User>> callback) {
         DatabaseReference chatsRef = FirebaseDatabase.getInstance().getReference("chats");
