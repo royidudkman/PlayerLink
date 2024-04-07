@@ -69,16 +69,6 @@ public class AllGamesFragment extends Fragment {
 
     }
 
-//    private String getCurrentUserId() {
-//        FirebaseAuth auth = FirebaseAuth.getInstance();
-//        FirebaseUser user = auth.getCurrentUser();
-//        if (user != null) {
-//            return user.getUid();
-//        } else {
-//            // Handle the case where the user is not authenticated
-//            return null;
-//        }
-//    }
 
     private void saveSelectedGames() {
         String userId = currentUser.getUserId();

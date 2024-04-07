@@ -72,6 +72,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
             Glide.with(itemView.getContext())
                     .load(game.getImage())
                     .into(gameImage);
+
         }
     }
 }
