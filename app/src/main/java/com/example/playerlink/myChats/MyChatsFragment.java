@@ -28,6 +28,7 @@ public class MyChatsFragment extends Fragment implements MyChatsAdapter.OnUserCl
     private MyChatsViewModel viewModel;
     private MyChatsAdapter adapter;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

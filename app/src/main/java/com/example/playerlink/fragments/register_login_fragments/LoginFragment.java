@@ -16,6 +16,7 @@ import com.example.playerlink.MainActivity;
 import com.example.playerlink.R;
 import com.example.playerlink.Result;
 import com.example.playerlink.databinding.FragmentLoginBinding;
+import com.example.playerlink.models.User;
 import com.example.playerlink.repositories.AuthRepositoryFirebase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,6 +25,8 @@ public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;
     private LoginViewModel viewModel;
     private AuthRepositoryFirebase authRepository;
+
+    private static User currentUser;
 
 
     @Nullable
@@ -71,6 +74,7 @@ public class LoginFragment extends Fragment {
                 binding.signUpTextBtn.setEnabled(false);
 
             } else if (result instanceof Result.Success) {
+                currentUser = ((Result.Success<User>) result).data;
                 Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_allUsersFragment);
 
             } else {
@@ -87,6 +91,10 @@ public class LoginFragment extends Fragment {
             }
         });
 
+    }
+
+    public static User GetCurrentUser(){
+        return currentUser;
     }
 
     @Override

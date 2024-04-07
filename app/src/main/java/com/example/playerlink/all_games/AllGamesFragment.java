@@ -36,7 +36,6 @@ public class AllGamesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private GameAdapter gameAdapter;
-
     private ProfileRepository profileRepository = new ProfileRepositoryFirebase();
 
     @Override
