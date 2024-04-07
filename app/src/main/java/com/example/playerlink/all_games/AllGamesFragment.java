@@ -22,7 +22,9 @@ import com.example.playerlink.MainActivity;
 import com.example.playerlink.R;
 import com.example.playerlink.RAWG_api.DataService;
 import com.example.playerlink.Result;
+import com.example.playerlink.fragments.register_login_fragments.LoginFragment;
 import com.example.playerlink.models.Game;
+import com.example.playerlink.models.User;
 import com.example.playerlink.repositories.ProfileRepository;
 import com.example.playerlink.repositories.ProfileRepositoryFirebase;
 import com.example.playerlink.repositories.RepositoryCallback;
@@ -37,6 +39,7 @@ public class AllGamesFragment extends Fragment {
     private RecyclerView recyclerView;
     private GameAdapter gameAdapter;
     private ProfileRepository profileRepository = new ProfileRepositoryFirebase();
+    private User currentUser = LoginFragment.GetCurrentUser();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,19 +69,19 @@ public class AllGamesFragment extends Fragment {
 
     }
 
-    private String getCurrentUserId() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-        if (user != null) {
-            return user.getUid();
-        } else {
-            // Handle the case where the user is not authenticated
-            return null;
-        }
-    }
+//    private String getCurrentUserId() {
+//        FirebaseAuth auth = FirebaseAuth.getInstance();
+//        FirebaseUser user = auth.getCurrentUser();
+//        if (user != null) {
+//            return user.getUid();
+//        } else {
+//            // Handle the case where the user is not authenticated
+//            return null;
+//        }
+//    }
 
     private void saveSelectedGames() {
-        String userId = getCurrentUserId();
+        String userId = currentUser.getUserId();
 
         List<String> selectedGames = new ArrayList<>();
         for (Game game : gameAdapter.getGames()) {

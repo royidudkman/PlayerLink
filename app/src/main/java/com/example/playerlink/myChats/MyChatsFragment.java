@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,7 @@ import com.example.playerlink.R;
 import com.example.playerlink.all_users.MyChatsAdapter;
 import com.example.playerlink.chat.ChatFragment;
 import com.example.playerlink.databinding.FragmentMyChatsBinding;
+import com.example.playerlink.fragments.register_login_fragments.LoginFragment;
 import com.example.playerlink.models.User;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class MyChatsFragment extends Fragment implements MyChatsAdapter.OnUserCl
     private FragmentMyChatsBinding binding;
     private MyChatsViewModel viewModel;
     private MyChatsAdapter adapter;
+    private User currentUser = LoginFragment.GetCurrentUser();
 
 
     @Nullable
@@ -42,19 +45,11 @@ public class MyChatsFragment extends Fragment implements MyChatsAdapter.OnUserCl
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(MyChatsViewModel.class);
 
-        viewModel.getCurrentUser().observe(getViewLifecycleOwner(), new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                if (user != null) {
-                    // Initialize adapter with current user
-                    adapter = new MyChatsAdapter(requireContext(), new ArrayList<>(), user, MyChatsFragment.this);
-                    binding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-                    binding.recycler.setAdapter(adapter);
-                } else {
-                    // Handle the case where current user is null
-                }
-            }
-        });
+
+        adapter = new MyChatsAdapter(requireContext(), new ArrayList<>(), currentUser, MyChatsFragment.this);
+        binding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.recycler.setAdapter(adapter);
+
 
         viewModel.getChatsWithUsersLiveData().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
@@ -68,7 +63,7 @@ public class MyChatsFragment extends Fragment implements MyChatsAdapter.OnUserCl
     }
 
 
-    private String makeChatId(String userId1, String userId2){
+    private String makeChatId(String userId1, String userId2) {
         String chatId;
 
         if (userId1.compareTo(userId2) < 0) {
@@ -90,7 +85,7 @@ public class MyChatsFragment extends Fragment implements MyChatsAdapter.OnUserCl
         ChatFragment chatFragment = new ChatFragment();
         chatFragment.setArguments(args);
 
-        NavHostFragment.findNavController(this).navigate(R.id.action_myChatsFragment_to_chatFragment,args);
+        NavHostFragment.findNavController(this).navigate(R.id.action_myChatsFragment_to_chatFragment, args);
     }
 
     @Override

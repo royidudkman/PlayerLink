@@ -22,6 +22,7 @@ import com.example.playerlink.R;
 import com.example.playerlink.RAWG_api.DataService;
 import com.example.playerlink.chat.ChatFragment;
 import com.example.playerlink.databinding.FragmentAllUsersBinding;
+import com.example.playerlink.fragments.register_login_fragments.LoginFragment;
 import com.example.playerlink.models.User;
 import com.example.playerlink.repositories.ProfileRepositoryFirebase;
 import com.example.playerlink.repositories.RepositoryCallback;
@@ -36,8 +37,9 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
     private AllUsersViewModel viewModel;
     private AllUsersAdapter adapter;
     private ProfileRepositoryFirebase profileRepository = new ProfileRepositoryFirebase();
-    private ArrayList<String> allGames;;
-    private User currentUser;
+    private ArrayList<String> allGames;
+    ;
+    private User currentUser = LoginFragment.GetCurrentUser();
 
     @Nullable
     @Override
@@ -61,17 +63,11 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
         viewModel = new ViewModelProvider(this).get(AllUsersViewModel.class);
 
         // Observe current user LiveData
-        viewModel.getCurrentUser().observe(getViewLifecycleOwner(), new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                currentUser = user;
 
-                // Initialize RecyclerView adapter with the current user
-                adapter = new AllUsersAdapter(requireContext(), new ArrayList<>(), currentUser, AllUsersFragment.this);
-                binding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-                binding.recycler.setAdapter(adapter);
-            }
-        });
+        adapter = new AllUsersAdapter(requireContext(), new ArrayList<>(), currentUser, AllUsersFragment.this);
+        binding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.recycler.setAdapter(adapter);
+
 
         return binding.getRoot();
     }
