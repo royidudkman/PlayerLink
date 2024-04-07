@@ -20,8 +20,15 @@ public class DataService {
     private static ArrayList<Game> allGames = new ArrayList<>();
     private static ArrayList<String> allGamesNames = new ArrayList<>();
 
-    public static ArrayList<Game> getAllGames(){
-        allGames.clear();
+    public static ArrayList<Game> getAllGames() {
+        return allGames;
+    }
+
+    public static ArrayList<String> getAllGamesNames() {
+        return allGamesNames;
+    }
+
+    public static void loadAllGames() {
         String sURL = "https://api.rawg.io/api/games" + "?key=" + "e71ebd8ee128446aba497a75c23e036a";
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -50,51 +57,14 @@ public class DataService {
 
                 Game game = new Game(name, rating, image);
                 allGames.add(game);
-            }
-
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e){
-            throw new RuntimeException(e);
-        }
-        return  allGames;
-    }
-
-    public static ArrayList<String> getAllGamesNames(){
-        allGamesNames.clear();
-        String sURL = "https://api.rawg.io/api/games" + "?key=" + "e71ebd8ee128446aba497a75c23e036a";
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        try {
-            URL url = new URL(sURL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.connect();
-
-            JsonParser jp = new JsonParser();
-            JsonElement root = jp.parse(new InputStreamReader(connection.getInputStream()));
-            JsonObject jsonObject = root.getAsJsonObject();
-
-            // Get the "results" array from the JsonObject
-            JsonArray resultsArray = jsonObject.getAsJsonArray("results");
-
-            StringBuilder data = new StringBuilder();
-
-            // Iterate over each element in the "results" array
-            for (JsonElement element : resultsArray) {
-                JsonObject obj = element.getAsJsonObject();
-                String name = obj.get("name").getAsString();
-
-
                 allGamesNames.add(name);
             }
 
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return  allGamesNames;
     }
+
 }

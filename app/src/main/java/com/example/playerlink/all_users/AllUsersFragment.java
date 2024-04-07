@@ -48,7 +48,9 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
         if (allGames == null || allGames.isEmpty()) {
             allGames = new ArrayList<>();
             allGames = DataService.getAllGamesNames();
-            allGames.add(0, "Filter by game");
+            if (!allGames.contains("Filter by game")) {
+                allGames.add(0, "Filter by game");
+            }
         }
         Spinner spinnerGames = binding.spinner;
         ArrayAdapter<String> gamesAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, allGames);
