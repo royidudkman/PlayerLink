@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".profile.ProfileFragment">
+    tools:context=".profile.ProfileFragment"
+    android:background="@color/white">
 
     <Button
         style="@style/Widget.Material3.Button.TextButton"
@@ -16,6 +17,7 @@
         android:text="Change Username"/>
 
     <Button
+        android:backgroundTint="#B2FFFFFF"
         style="@style/Widget.Material3.Button.TextButton"
         android:id="@+id/update_game_btn"
         android:layout_marginTop="10dp"
@@ -25,6 +27,7 @@
         android:text="Update games"/>
 
     <Button
+        android:backgroundTint="#B2FFFFFF"
         style="@style/Widget.Material3.Button.TextButton"
         android:id="@+id/sign_out_btn"
         android:layout_marginTop="10dp"
@@ -32,5 +35,14 @@
         android:layout_height="wrap_content"
         android:textColor="@color/red"
         android:text="Sign Out"/>
+
+    <ProgressBar
+        android:id="@+id/loadingProgressbar"
+        style="?android:attr/progressBarStyle"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
 </LinearLayout>

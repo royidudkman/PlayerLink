@@ -78,6 +78,7 @@ public class LoginFragment extends Fragment {
                 Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_allUsersFragment);
 
             } else {
+                binding.loadingProgressbar.setVisibility(View.GONE);
                 binding.signUpTextBtn.setEnabled(true);
             }
         });

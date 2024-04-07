@@ -99,7 +99,10 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
                         public void onComplete(Result<List<User>> result) {
                             if (result instanceof Result.Success) {
                                 List<User> users = ((Result.Success<List<User>>) result).data;
+                                binding.loadingProgressbar.setVisibility(View.GONE);
                                 adapter.setUserList(users);
+                            } else if (result instanceof Result.Loading) {
+                                binding.loadingProgressbar.setVisibility(View.VISIBLE);
                             } else if (result instanceof Result.Error) {
                                 // Handle error
                                 Toast.makeText(requireContext(), "Error fetching users", Toast.LENGTH_SHORT).show();
