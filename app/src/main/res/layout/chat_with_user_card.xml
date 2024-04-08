@@ -50,13 +50,13 @@
 
 
                 <Button
+                    android:id="@+id/start_chat_btn"
+                    android:textColor="@color/black"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="start chatting"
-                    app:icon="@drawable/add_circle_svgrepo_com"
-                    android:id="@+id/start_chat_btn"/>
+                    android:text="start chatting" />
 
             </LinearLayout>
 

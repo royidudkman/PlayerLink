@@ -212,4 +212,32 @@ public class ChatRepositoryFirebase implements ChatRepository {
                 });
     }
 
+    @Override
+    public void getLastMessage(String chatId, final RepositoryCallback<Message> callback) {
+        // Reference to the "messages" node of the specified chat
+        DatabaseReference messagesRef = chatsRef.child(chatId).child("messages");
+
+        // Query to get the last message by ordering messages by their key (which is a timestamp)
+        messagesRef.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Get the last message from the dataSnapshot
+                    for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                        Message message = messageSnapshot.getValue(Message.class);
+                        callback.onComplete(new Result.Success<>(message));
+                        return; // Exit the loop after getting the last message
+                    }
+                } else {
+                    callback.onComplete(new Result.Error<>(new Exception("No messages found")));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                callback.onComplete(new Result.Error<>(databaseError.toException()));
+            }
+        });
+    }
+
 }
