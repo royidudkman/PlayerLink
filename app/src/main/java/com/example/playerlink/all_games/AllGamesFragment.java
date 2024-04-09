@@ -53,7 +53,6 @@ public class AllGamesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_all_games, container, false);
-
     }
 
     @Override
@@ -81,9 +80,9 @@ public class AllGamesFragment extends Fragment {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Save Games");
-        builder.setMessage("Are you sure you want to save the selected games?\n you can change it later in your profile");
-        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.save_games);
+        builder.setMessage(R.string.are_you_sure_you_want_to_save_the_selected_games_you_can_change_it_later_in_your_profile);
+        builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 profileRepository.updateGamesList(userId, selectedGames, new RepositoryCallback<Void>() {
@@ -91,11 +90,11 @@ public class AllGamesFragment extends Fragment {
                     public void onComplete(Result<Void> result) {
                         if (result instanceof Result.Success) {
                             // Handle success
-                            Toast.makeText(requireContext(), "Games saved", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), R.string.games_saved, Toast.LENGTH_SHORT).show();
                             Navigation.findNavController(requireView()).navigate(R.id.action_allGamesFragment_to_allUsersFragment2);
                         } else if (result instanceof Result.Error) {
                             // Handle error
-                            Toast.makeText(requireContext(), "Error saving games", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), R.string.error_saving_games, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

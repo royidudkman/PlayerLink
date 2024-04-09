@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.register_login_fragments.LoginFragment"
-    android:background="@drawable/background">
+    android:background="@color/white">
 
     <LinearLayout
         style="@style/linearParent"
@@ -15,7 +15,7 @@
 
         <TextView
             style="@style/headerTextPrimary"
-            android:text="Welcome to PlayerLink \n Login"
+            android:text="@string/welcome_to_playerlink_n_login"
             android:layout_marginTop="@dimen/loginViewsMargin"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -65,7 +65,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:id="@+id/login_btn"
-            android:text="Login" />
+            android:text="@string/login" />
 
 
         <TextView
@@ -74,12 +74,17 @@
             android:textStyle="bold"
             android:textColor="@color/primaryTextColor"
             android:text="@string/login_signup_hint"
-            android:onClick="viewRegisterClicked"
             android:layout_marginTop="@dimen/loginViewsMargin"
             android:id="@+id/signUp_textBtn"/>
 
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="70dp"
+        android:src="@mipmap/ic_launcher"/>
 
     <ProgressBar
         android:id="@+id/loadingProgressbar"

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PlayerLink</string>
+    <string name="register">הרשם</string>
+    <string name="login_email_hint">אימייל</string>
+    <string name="login_password_hint">סיסמה</string>
+    <string name="signup_login_hint">כבר יש לך חשבון? התחבר</string>
+    <string name="login_signup_hint">אין לך חשבון? הרשם</string>
+    <string name="hello_blank_fragment">שלום רכיב ריק</string>
+    <string name="save_games">שמור משחקים</string>
+    <string name="are_you_sure_you_want_to_save_the_selected_games_you_can_change_it_later_in_your_profile">האם אתה בטוח שברצונך לשמור את המשחקים הנבחרים?\n אתה יכול לשנות זאת מאוחר יותר בפרופיל שלך</string>
+    <string name="save">שמור</string>
+    <string name="games_saved">המשחקים נשמרו</string>
+    <string name="error_saving_games">שגיאה בשמירת המשחקים</string>
+    <string name="error_fetching_users">שגיאה בקבלת המשתמשים</string>
+    <string name="no_messages_yet">טרם נשלחו הודעות</string>
+    <string name="sign_out">התנתק</string>
+    <string name="are_you_sure_you_want_to_sign_out">האם אתה בטוח שברצונך להתנתק?</string>
+    <string name="yes">כן</string>
+    <string name="no">לא</string>
+    <string name="change_username">שנה שם משתמש</string>
+    <string name="enter_new_username">הזן שם משתמש חדש</string>
+    <string name="cancel">ביטול</string>
+    <string name="start_chatting">התחל לשוחח</string>
+    <string name="pick_the_games_that_you_play">בחר את המשחקים שאתה משחק</string>
+    <string name="enter_message">הזן הודעה</string>
+    <string name="send">שלח</string>
+    <string name="welcome_to_playerlink_n_login">ברוך הבא ל-PlayerLink\n התחבר</string>
+    <string name="login">התחבר</string>
+    <string name="change_profile_picture">שנה תמונת פרופיל</string>
+    <string name="update_games">עדכן משחקים</string>
+    <string name="welcome_to_playerlink_n_register">ברוך הבא ל-PlayerLink\n הרשם</string>
+    <string name="name">שם</string>
+    <string name="rating">דירוג</string>
+    <string name="search_players">חפש שחקנים</string>
+    <string name="chats">שיחות</string>
+    <string name="profile">פרופיל</string>
+</resources>

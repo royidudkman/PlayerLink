@@ -70,7 +70,7 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/button_chat_send"
             android:background="@android:color/transparent"
-            android:hint="Enter Message"
+            android:hint="@string/enter_message"
             android:inputType="text"
             android:maxLines="6"
             tools:ignore="Autofill" />
@@ -82,7 +82,7 @@
             android:layout_alignParentEnd="true"
             android:background="?attr/selectableItemBackground"
             app:icon="@drawable/send_2_svgrepo_com"
-            android:text="Send"
+            android:text="@string/send"
             android:textColor="@color/colorPrimary" />
 
     </RelativeLayout>

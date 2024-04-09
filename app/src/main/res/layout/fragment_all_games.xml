@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pick the games that you play"
+        android:text="@string/pick_the_games_that_you_play"
         android:gravity="center"
         android:textSize="20dp"
         android:layout_margin="10dp"
@@ -36,7 +36,7 @@
         android:layout_margin="10dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Save games"
+        android:text="@string/save_games"
         android:id="@+id/save_games_btn"/>
 
 </LinearLayout>

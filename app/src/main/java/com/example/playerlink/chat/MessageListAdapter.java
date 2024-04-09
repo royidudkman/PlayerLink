@@ -82,7 +82,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
-    // Define your ViewHolders here
     private static class MyMessageViewHolder extends RecyclerView.ViewHolder {
         TextView myMessageTextView;
         MyMessageViewHolder(View itemView) {
@@ -103,7 +102,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         void bind(Message message) {
-            // Bind data for other message
             otherMessageTextView.setText(message.getMessageText());
         }
     }

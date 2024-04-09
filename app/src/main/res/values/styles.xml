@@ -47,4 +47,8 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/custom_spinner_dropdown_item_background</item>
+    </style>
+
 </resources>

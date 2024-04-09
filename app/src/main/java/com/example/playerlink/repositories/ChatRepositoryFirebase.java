@@ -90,17 +90,17 @@ public class ChatRepositoryFirebase implements ChatRepository {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Message> messages = new ArrayList<>();
                 for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
-                    // Parse Message objects from DataSnapshot
+
                     Message message = messageSnapshot.getValue(Message.class);
                     messages.add(message);
                 }
-                // Pass the list of all messages to the callback
+
                 callback.onComplete(new Result.Success<>(messages));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle onCancelled if needed
+
                 callback.onComplete(new Result.Error<>(databaseError.toException()));
             }
         });
@@ -110,20 +110,20 @@ public class ChatRepositoryFirebase implements ChatRepository {
         chatsRef.child(chatId).child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Process the dataSnapshot to retrieve messages
+
                 List<Message> messages = new ArrayList<>();
                 for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
-                    // Parse Message objects from DataSnapshot
+
                     Message message = messageSnapshot.getValue(Message.class);
                     messages.add(message);
                 }
-                // Pass the retrieved messages to the callback
+
                 callback.onComplete(new Result.Success<>(messages));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle onCancelled if needed
+
             }
         });
     }
@@ -131,15 +131,15 @@ public class ChatRepositoryFirebase implements ChatRepository {
 
     @Override
     public void sendMessage(String originalChatId, final Message message, final RepositoryCallback<String> callback) {
-        // Check if the original chat ID exists
+
         chatsRef.child(originalChatId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    // Original chat ID exists, use it
+
                     sendMessageToChat(originalChatId, message, callback);
                 } else {
-                    // Original chat ID doesn't exist, try swapping user IDs and check if the chat exists
+
                     String[] userIds = originalChatId.split("_with_");
                     if (userIds.length == 2) {
                         String swappedChatId = userIds[1] + "_with_" + userIds[0];
@@ -150,7 +150,7 @@ public class ChatRepositoryFirebase implements ChatRepository {
                                     // Swapped chat ID exists, use it
                                     sendMessageToChat(swappedChatId, message, callback);
                                 } else {
-                                    // Neither original nor swapped chat ID exists, create a new chat
+
                                     String newChatId = originalChatId;
                                     createNewChat(newChatId, message, callback);
                                 }
@@ -194,13 +194,12 @@ public class ChatRepositoryFirebase implements ChatRepository {
     }
 
     private void createNewChat(String chatId, final Message message, final RepositoryCallback<String> callback) {
-        Chat chat = new Chat(); // Create new chat object if needed
-        // Add other chat properties if necessary
+        Chat chat = new Chat();
+
         chatsRef.child(chatId).setValue(chat)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Chat created successfully, now send the message
                         sendMessageToChat(chatId, message, callback);
                     }
                 })
@@ -214,19 +213,18 @@ public class ChatRepositoryFirebase implements ChatRepository {
 
     @Override
     public void getLastMessage(String chatId, final RepositoryCallback<Message> callback) {
-        // Reference to the "messages" node of the specified chat
+
         DatabaseReference messagesRef = chatsRef.child(chatId).child("messages");
 
-        // Query to get the last message by ordering messages by their key (which is a timestamp)
         messagesRef.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    // Get the last message from the dataSnapshot
+
                     for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
                         Message message = messageSnapshot.getValue(Message.class);
                         callback.onComplete(new Result.Success<>(message));
-                        return; // Exit the loop after getting the last message
+                        return;
                     }
                 } else {
                     callback.onComplete(new Result.Error<>(new Exception("No messages found")));

@@ -59,10 +59,7 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
         gamesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGames.setAdapter(gamesAdapter);
 
-        // Initialize ViewModel
         viewModel = new ViewModelProvider(this).get(AllUsersViewModel.class);
-
-        // Observe current user LiveData
 
         adapter = new AllUsersAdapter(requireContext(), new ArrayList<>(), currentUser, AllUsersFragment.this);
         binding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -75,12 +72,9 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Observe LiveData from ViewModel
         viewModel.getUsersLiveData().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
-                // Update UI with users data
                 adapter.setUserList(users);
             }
         });
@@ -90,10 +84,8 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedGame = parent.getItemAtPosition(position).toString();
                 if (selectedGame.equals("Filter by game")) {
-                    // Fetch all users without filtering
                     observeUsers();
                 } else {
-                    // Fetch users based on the selected game
                     profileRepository.getUsersByGame(selectedGame, currentUser.getUserId(), new RepositoryCallback<List<User>>() {
                         @Override
                         public void onComplete(Result<List<User>> result) {
@@ -104,8 +96,7 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
                             } else if (result instanceof Result.Loading) {
                                 binding.loadingProgressbar.setVisibility(View.VISIBLE);
                             } else if (result instanceof Result.Error) {
-                                // Handle error
-                                Toast.makeText(requireContext(), "Error fetching users", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(requireContext(), R.string.error_fetching_users, Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -114,7 +105,6 @@ public class AllUsersFragment extends Fragment implements AllUsersAdapter.OnUser
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing
             }
         });
     }

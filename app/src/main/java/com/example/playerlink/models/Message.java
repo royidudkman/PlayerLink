@@ -3,11 +3,11 @@ package com.example.playerlink.models;
 public class Message {
     private String messageId;
     private String messageText;
-    private String senderId; // ID of the sender user
+    private String senderId;
     private long timestamp;
 
     public Message() {
-        // Default constructor required for Firebase
+
     }
 
     public Message(String messageId, String messageText, String senderId, long timestamp) {

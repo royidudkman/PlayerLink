@@ -25,7 +25,6 @@ public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;
     private LoginViewModel viewModel;
     private AuthRepositoryFirebase authRepository;
-
     private static User currentUser;
 
 

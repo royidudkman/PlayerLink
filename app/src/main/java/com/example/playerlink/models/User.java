@@ -20,7 +20,7 @@ public class User implements Serializable {
 
 
     public User() {
-        // Default constructor required for Firebase
+
     }
 
     public User(String userId, String userName, String userEmail) {

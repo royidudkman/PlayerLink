@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="7dp"
                     android:paddingRight="7dp"
-                    android:text="My homie"
+                    android:text="user's name"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="start chatting" />
+                    android:text="@string/start_chatting" />
 
             </LinearLayout>
 

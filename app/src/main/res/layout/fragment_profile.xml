@@ -22,7 +22,7 @@
             android:paddingLeft="90dp"
             android:paddingTop="20dp"
             android:textColor="@color/primaryTextColor"
-            android:text="Change profile picture"
+            android:text="@string/change_profile_picture"
             android:layout_weight="0.1"/>
 
         <ImageView
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/primaryTextColor"
-        android:text="Change Username"/>
+        android:text="@string/change_username"/>
 
     <Button
         android:backgroundTint="#B2FFFFFF"
@@ -53,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/primaryTextColor"
-        android:text="Update games"/>
+        android:text="@string/update_games"/>
 
     <Button
         android:backgroundTint="#B2FFFFFF"
@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/red"
-        android:text="Sign Out"/>
+        android:text="@string/sign_out"/>
 
     <ProgressBar
         android:id="@+id/loadingProgressbar"

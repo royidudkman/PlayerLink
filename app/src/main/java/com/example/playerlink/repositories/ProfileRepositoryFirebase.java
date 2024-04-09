@@ -55,12 +55,12 @@ public class ProfileRepositoryFirebase implements ProfileRepository {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<String> otherUserIds = new ArrayList<>();
 
-                // Loop through all chat IDs
+
                 for (DataSnapshot chatSnapshot : dataSnapshot.getChildren()) {
                     String chatId = chatSnapshot.getKey();
-                    // Check if the chat ID contains the current user's ID
+
                     if (chatId.contains(currentUserId)) {
-                        // Extract the other user's ID from the chat ID
+
                         String[] userIds = chatId.split("_with_");
                         if (userIds.length == 2) {
                             String otherUserId = userIds[0].equals(currentUserId) ? userIds[1] : userIds[0];
@@ -69,7 +69,7 @@ public class ProfileRepositoryFirebase implements ProfileRepository {
                     }
                 }
 
-                // Fetch user data for each other user ID
+
                 List<User> users = new ArrayList<>();
                 for (String userId : otherUserIds) {
                     usersRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -78,7 +78,7 @@ public class ProfileRepositoryFirebase implements ProfileRepository {
                             User user = dataSnapshot.getValue(User.class);
                             if (user != null) {
                                 users.add(user);
-                                // Check if all users have been fetched
+
                                 if (users.size() == otherUserIds.size()) {
                                     callback.onComplete(new Result.Success<>(users));
                                 }
@@ -107,8 +107,7 @@ public class ProfileRepositoryFirebase implements ProfileRepository {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     User user = dataSnapshot.getValue(User.class);
-                    // Update the user's data
-                    // For example, if myFriends list is updated, set it back to Firebase
+
                     userRef.child(userId).setValue(user)
                             .addOnSuccessListener(aVoid -> callback.onComplete(new Result.Success<>(null)))
                             .addOnFailureListener(e -> callback.onComplete(new Result.Error<>(e)));
@@ -127,7 +126,7 @@ public class ProfileRepositoryFirebase implements ProfileRepository {
 
     @Override
     public void updateGamesList(String userId, List<String> games, RepositoryCallback<Void> callback) {
-        // Update games list in Firebase
+
         if(games.isEmpty()){
             usersRef.child(userId).child("myGames").removeValue()
                     .addOnSuccessListener(aVoid -> callback.onComplete(new Result.Success<>(null)))
@@ -170,10 +169,8 @@ public class ProfileRepositoryFirebase implements ProfileRepository {
                     User user = snapshot.getValue(User.class);
                     if (user != null && !user.getUserId().equals(currentUserId)) {
                         if (user.getMyGames() != null && user.getMyGames().contains(game)) {
-                            // If user has myGames and it contains the selected game, add the user
                             users.add(user);
                         } else if (user.getMyGames() == null && game.equals("Filter by game")) {
-                            // If user doesn't have myGames and the selected game is "Filter by game", add the user
                             users.add(user);
                         }
                     }

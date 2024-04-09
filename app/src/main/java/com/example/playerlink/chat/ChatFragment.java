@@ -92,19 +92,16 @@ public class ChatFragment extends Fragment {
     }
 
     private void sendMessage() {
-        // Get the message text from the input field
         String messageText = binding.editChatMessage.getText().toString().trim();
         if (!messageText.isEmpty()) {
-            // Create a new Message object
+
             Message message = new Message();
             message.setMessageText(messageText);
-            message.setSenderId(currentUser.getUserId()); // Set the sender ID to the current user's ID
-            message.setTimestamp(System.currentTimeMillis()); // Set current timestamp
+            message.setSenderId(currentUser.getUserId());
+            message.setTimestamp(System.currentTimeMillis());
 
-            // Use the chatId obtained from arguments
             chatViewModel.sendMessage(chatId, message);
 
-            // Clear the input field after sending the message
             binding.editChatMessage.getText().clear();
         }
     }

@@ -32,22 +32,6 @@ public class MyChatsViewModel extends ViewModel {
     }
 
 
-
-//    private void fetchCurrentUser() {
-//        chatRepository.getCurrentUser(new RepositoryCallback<User>() {
-//            @Override
-//            public void onComplete(Result<User> result) {
-//                if (result instanceof Result.Success) {
-//                    mCurrentUserLiveData.postValue(((Result.Success<User>) result).data);
-//                    // Fetch chats with users only when current user data is available
-//                    fetchChatsWithUsers(((Result.Success<User>) result).data.getUserId());
-//                } else {
-//                    // Handle error
-//                }
-//            }
-//        });
-//    }
-
     public void fetchChatsWithUsers(String currentUserId) {
         profileRepository.getChatsAndUsers(currentUserId, new RepositoryCallback<List<User>>() {
             @Override
@@ -55,7 +39,7 @@ public class MyChatsViewModel extends ViewModel {
                 if (result instanceof Result.Success) {
                     mChatsWithUsersLiveData.postValue(((Result.Success<List<User>>) result).data);
                 } else {
-                    // Handle error
+
                 }
             }
         });

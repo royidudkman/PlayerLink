@@ -48,7 +48,7 @@ public class ChatViewModel extends ViewModel {
                 if (result instanceof Result.Success) {
                     messagesLiveData.postValue(((Result.Success<List<Message>>) result).data);
                 } else {
-                    // Handle error
+
                 }
             }
         });
@@ -63,7 +63,7 @@ public class ChatViewModel extends ViewModel {
                     readMessages(chatId);
                     observeMessages(chatId, null);
                 } else {
-                    // Handle error
+
                 }
             }
         });
@@ -85,7 +85,6 @@ public class ChatViewModel extends ViewModel {
             childEventListener = chatsRef.child(chatId).child("messages").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
-                    // A new message has been added to the chat
                     Message message = dataSnapshot.getValue(Message.class);
                     List<Message> messages = messagesLiveData.getValue();
                     if (messages == null) {
@@ -98,22 +97,22 @@ public class ChatViewModel extends ViewModel {
 
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    // Handle message changed if needed
+
                 }
 
                 @Override
                 public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                    // Handle message removed if needed
+
                 }
 
                 @Override
                 public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    // Handle message moved if needed
+
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    // Handle onCancelled if needed
+
                     callback.onComplete(new Result.Error<>(databaseError.toException()));
                 }
             });
@@ -128,7 +127,6 @@ public class ChatViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
         if (childEventListener != null) {
-            // Remove the ChildEventListener
             chatsRef.removeEventListener(childEventListener);
             childEventListener = null;
         }

@@ -135,17 +135,12 @@ public class AuthRepositoryFirebase implements AuthRepository {
                         .setDisplayName(displayName).build();
                 firebaseUser.updateProfile(profileUpdates).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // Profile updated successfully
-                        // You can handle this if needed
                     } else {
-                        // Failed to update profile
-                        // You can handle this if needed
                     }
                 });
-                // Add user to the Firebase Realtime Database under "users" node
                 DatabaseReference newUserRef = userRef.child(firebaseUser.getUid());
                 User user = new User(firebaseUser.getUid(), displayName, firebaseUser.getEmail());
-                newUserRef.setValue(user); // Set user information
+                newUserRef.setValue(user);
 
                 return new Result.Success<>(user);
             } else {

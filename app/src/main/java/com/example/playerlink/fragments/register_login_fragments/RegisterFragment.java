@@ -52,13 +52,11 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onChanged(Result<User> result) {
                 if (result instanceof Result.Success) {
-                    // Handle successful registration
                     LoginFragment.SetCurrentUser(((Result.Success<User>) result).data);
                     Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_allGamesFragment);
                 } else if(result instanceof Result.Loading) {
                     binding.loadingProgressbar.setVisibility(View.VISIBLE);
                 } else {
-                    // Handle failed registration
                     Exception exception = ((Result.Error<User>) result).exception;
                     String errorMessage = exception.getMessage();
                     binding.errorMessageTextView.setText(errorMessage);

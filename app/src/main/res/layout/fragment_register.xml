@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.register_login_fragments.RegisterFragment"
-    android:background="@drawable/background">
+    android:background="@color/white">
 
     <LinearLayout
         style="@style/linearParent"
@@ -16,7 +16,7 @@
 
         <TextView
             style="@style/headerTextPrimary"
-            android:text="Welcome to PlayerLink \n Register"
+            android:text="@string/welcome_to_playerlink_n_register"
             android:layout_marginTop="@dimen/loginViewsMargin"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -30,7 +30,7 @@
                 style="@style/modifiedEditText"
                 android:inputType="text"
                 android:maxLines="1"
-                android:hint="Name"/>
+                android:hint="@string/name"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:text="Register"
+            android:text="@string/register"
             android:id="@+id/register_btn"/>
 
         <TextView
@@ -90,6 +90,12 @@
             android:id="@+id/signIn_TextBtn"/>
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="70dp"
+        android:src="@mipmap/ic_launcher"/>
 
     <ProgressBar
         android:id="@+id/loadingProgressbar"

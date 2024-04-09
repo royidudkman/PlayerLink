@@ -68,7 +68,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         public void bind(Game game) {
             gameTitle.setText(game.getName());
             rating.setText(String.valueOf(game.getRating()));
-            // Load image using Glide
+
             Glide.with(itemView.getContext())
                     .load(game.getImage())
                     .into(gameImage);

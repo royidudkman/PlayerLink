@@ -41,7 +41,6 @@ public class ProfileFragment extends Fragment {
     private AuthRepositoryFirebase authRepository;
     private ProfileRepositoryFirebase profileRepository;
 
-
     private User currentUser = LoginFragment.GetCurrentUser();
 
 
@@ -76,16 +75,16 @@ public class ProfileFragment extends Fragment {
 
     private void signOut(View v){
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Sign Out")
-                .setMessage("Are you sure you want to sign out?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.sign_out)
+                .setMessage(R.string.are_you_sure_you_want_to_sign_out)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         authRepository.logout();
                         Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_loginFragment);
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -128,7 +127,6 @@ public class ProfileFragment extends Fragment {
     }
 
     public void changeProfilePicture() {
-        // Create an intent to pick an image from the gallery
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }

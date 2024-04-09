@@ -54,7 +54,6 @@ public class MyChatsFragment extends Fragment implements MyChatsAdapter.OnUserCl
         viewModel.getChatsWithUsersLiveData().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
-                // Update the adapter with the list of users
                 if (adapter != null) {
                     adapter.setUserList(users);
                 }

@@ -98,10 +98,10 @@ public class MyChatsAdapter extends RecyclerView.Adapter<MyChatsAdapter.MyViewHo
                         if (message != null) {
                             lastMessage.setText(message.getMessageText());
                         } else {
-                            lastMessage.setText("No messages yet");
+                            lastMessage.setText(R.string.no_messages_yet);
                         }
                     } else {
-                        // Handle error case
+
                     }
                 }
             });

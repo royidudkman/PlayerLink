@@ -43,12 +43,10 @@ public class DataService {
             JsonElement root = jp.parse(new InputStreamReader(connection.getInputStream()));
             JsonObject jsonObject = root.getAsJsonObject();
 
-            // Get the "results" array from the JsonObject
             JsonArray resultsArray = jsonObject.getAsJsonArray("results");
 
             StringBuilder data = new StringBuilder();
 
-            // Iterate over each element in the "results" array
             for (JsonElement element : resultsArray) {
                 JsonObject obj = element.getAsJsonObject();
                 String name = obj.get("name").getAsString();
