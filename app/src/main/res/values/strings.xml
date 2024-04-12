@@ -34,4 +34,6 @@
     <string name="search_players">Search players</string>
     <string name="chats">Chats</string>
     <string name="profile">Profile</string>
+    <string name="delete">Delete</string>
+    <string name="are_you_sure_you_want_to_delete_this_message">Are you sure you want to delete this message?</string>
 </resources>

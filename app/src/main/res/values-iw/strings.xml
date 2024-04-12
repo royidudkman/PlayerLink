@@ -35,4 +35,6 @@
     <string name="search_players">חפש שחקנים</string>
     <string name="chats">שיחות</string>
     <string name="profile">פרופיל</string>
+    <string name="delete">מחק</string>
+    <string name="are_you_sure_you_want_to_delete_this_message">האם אתה בטוח שאתה רוצה למחוק את ההודעה?</string>
 </resources>

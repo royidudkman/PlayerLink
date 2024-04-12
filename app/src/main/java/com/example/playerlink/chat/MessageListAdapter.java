@@ -131,15 +131,15 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private void showDeleteConfirmationDialog(Message message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setMessage("Are you sure you want to delete this message?")
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.are_you_sure_you_want_to_delete_this_message)
+                .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Call deleteMessage method on ChatViewModel
                         chatViewModel.deleteMessage(chatId, message);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

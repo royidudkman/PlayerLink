@@ -128,7 +128,7 @@ public class ChatViewModel extends ViewModel {
         repository.deleteMessage(chatId, message, new RepositoryCallback<Boolean>() {
             @Override
             public void onComplete(Result<Boolean> result) {
-                // Handle the result (success or failure)
+
                 if (result instanceof Result.Success) {
                     readMessages(chatId);
 
