@@ -28,6 +28,8 @@ public class ChatViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isChatInitialized = new MutableLiveData<>(false);
     private ChildEventListener childEventListener;
 
+    private String currentChatId;
+
     public ChatViewModel() {
         repository = new ChatRepositoryFirebase();
         chatsRef = FirebaseDatabase.getInstance().getReference().child("chats");
@@ -74,6 +76,7 @@ public class ChatViewModel extends ViewModel {
     }
     public void initializeChat(String chatId) {
         if (!isChatInitialized.getValue()) {
+            currentChatId = chatId;
             observeMessages(chatId, null);
             isChatInitialized.postValue(true);
         }
@@ -119,6 +122,21 @@ public class ChatViewModel extends ViewModel {
         }
 
 
+    }
+
+    public void deleteMessage(String chatId, Message message) {
+        repository.deleteMessage(chatId, message, new RepositoryCallback<Boolean>() {
+            @Override
+            public void onComplete(Result<Boolean> result) {
+                // Handle the result (success or failure)
+                if (result instanceof Result.Success) {
+                    readMessages(chatId);
+
+                } else if (result instanceof Result.Error) {
+
+                }
+            }
+        });
     }
 
 

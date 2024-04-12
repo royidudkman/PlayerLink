@@ -238,4 +238,23 @@ public class ChatRepositoryFirebase implements ChatRepository {
         });
     }
 
+    @Override
+    public void deleteMessage(String chatId, Message message, final RepositoryCallback<Boolean> callback) {
+        DatabaseReference messageRef = chatsRef.child(chatId).child("messages").child(message.getMessageId());
+        message.setMessageText("This message was deleted");
+        messageRef.setValue(message)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        callback.onComplete(new Result.Success<>(true));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callback.onComplete(new Result.Error<>(e));
+                    }
+                });
+    }
+
 }

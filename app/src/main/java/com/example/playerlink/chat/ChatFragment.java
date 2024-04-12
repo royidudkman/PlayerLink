@@ -72,7 +72,7 @@ public class ChatFragment extends Fragment {
 
     private void initRecyclerView() {
         messageList = new ArrayList<>();
-        messageListAdapter = new MessageListAdapter(requireContext(), messageList);
+        messageListAdapter = new MessageListAdapter(requireContext(), messageList, chatId, chatViewModel);
         binding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recycler.setAdapter(messageListAdapter);
     }

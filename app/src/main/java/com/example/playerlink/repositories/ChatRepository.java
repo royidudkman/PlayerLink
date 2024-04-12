@@ -12,4 +12,5 @@ public interface ChatRepository {
     public void readMessages(String chatId, final RepositoryCallback<List<Message>> callback);
     public void sendMessage(String chatId, Message message, final RepositoryCallback<String> callback);
     public void getLastMessage(String chatId, final RepositoryCallback<Message> callback);
+    public void deleteMessage(String chatId, Message message, final RepositoryCallback<Boolean> callback);
 }

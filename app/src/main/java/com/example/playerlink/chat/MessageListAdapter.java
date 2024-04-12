@@ -1,12 +1,14 @@
 package com.example.playerlink.chat;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.playerlink.R;
@@ -30,10 +32,15 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private AuthRepository mAuthRepository;
     private User currentUser = LoginFragment.GetCurrentUser();
 
-    public MessageListAdapter(Context context, List<Message> messageList) {
+    private ChatViewModel chatViewModel;
+
+    private String chatId;
+    public MessageListAdapter(Context context, List<Message> messageList, String chatId, ChatViewModel viewModel) {
         this.mContext = context;
         this.mMessageList = messageList;
         this.mAuthRepository = new AuthRepositoryFirebase();
+        this.chatId = chatId;
+        this.chatViewModel = viewModel;
     }
 
 
@@ -58,6 +65,21 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else {
             ((OtherMessageViewHolder) holder).bind(message);
         }
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int clickedPosition = holder.getAdapterPosition();
+                if (clickedPosition != RecyclerView.NO_POSITION) {
+                    Message clickedMessage = mMessageList.get(clickedPosition);
+                    if (currentUser != null && clickedMessage != null && currentUser.getUserId().equals(clickedMessage.getSenderId())) {
+                        showDeleteConfirmationDialog(clickedMessage);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -104,6 +126,27 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         void bind(Message message) {
             otherMessageTextView.setText(message.getMessageText());
         }
+    }
+
+
+    private void showDeleteConfirmationDialog(Message message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage("Are you sure you want to delete this message?")
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Call deleteMessage method on ChatViewModel
+                        chatViewModel.deleteMessage(chatId, message);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }
